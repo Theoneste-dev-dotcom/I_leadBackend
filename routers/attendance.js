@@ -1,5 +1,6 @@
 const express  = require('express')
-const attendanceRouter = express()
+const attendanceRouter = express.Router()
+const {Attendance} = require('../db/appModel')
 
 // Function to create a new attendance record
 const createAttendance = async (userId, groupId, date, status) => {
@@ -10,7 +11,7 @@ const createAttendance = async (userId, groupId, date, status) => {
 
 // Function to get all attendance records
 const getAllAttendance = async () => {
-  return Attendance.find().exec();
+  return Attendance.find();
 };
 
 // Function to get attendance records by user ID and group ID
@@ -86,4 +87,4 @@ attendanceRouter.delete('/attendance/:id', async (req, res) => {
   }
 });
 
-module.express =  attendanceRouter
+module.exports =  attendanceRouter

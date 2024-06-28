@@ -1,18 +1,19 @@
-const mongoose = require('mongoose')
+const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
+const authenticateUser = require("../auth/auth");
 // Function to create a new user
 
-const { User }  = require("../db/appModel.js");
+const { User } = require("../db/appModel.js");
 
 const hashPassword = async (password) => {
-  const salt = await bcrypt.genSalt(10);
-  return bcrypt.hash(password, salt);
+  return bcrypt.hash(password, 10);
 };
 
 const createUser = async (name, email, password, role, year) => {
   const hashedPassword = await hashPassword(password);
   const user = new User({ name, email, password: hashedPassword, role, year });
   await user.save();
-  return generateToken(user);
+  return user;
 };
 
 const getAllUsers = async () => {
@@ -28,12 +29,18 @@ const updateUser = async (id, name, email, role, year) => {
     id,
     { name, email, role, year },
     { new: true }
-  ).exec();
-  return generateToken(user);
+  );
+  return user;
 };
 
 const deleteUser = async (id) => {
-  await User.findByIdAndRemove(id).exec();
+  await User.findByIdAndDelete(id);
 };
 
-module.exports =  { createUser, getAllUsers, getUserById, updateUser, deleteUser };
+module.exports = {
+  createUser,
+  getAllUsers,
+  getUserById,
+  updateUser,
+  deleteUser,
+};

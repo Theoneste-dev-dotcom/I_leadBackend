@@ -1,6 +1,6 @@
 // javascript
-const  {Group }  = require ("../db/appModel.js");
-const  express  = require("express");
+const { Group } = require("../db/appModel.js");
+const express = require("express");
 const groupRouter = express();
 // Function to create a new group
 const createGroup = async (year, groupNumber) => {
@@ -10,12 +10,12 @@ const createGroup = async (year, groupNumber) => {
 };
 // Function to get all groups
 const getAllGroups = async () => {
-  return Group.find().exec();
+  return Group.find();
 };
 
 // Function to get a group by ID
 const getGroupById = async (id) => {
-  return Group.findById(id).exec();
+  return Group.findById(id);
 };
 
 // Function to update a group
@@ -24,13 +24,13 @@ const updateGroup = async (id, year, groupNumber) => {
     id,
     { year, group_number: groupNumber },
     { new: true }
-  ).exec();
+  );
   return group;
 };
 
 // Function to delete a group
 const deleteGroup = async (id) => {
-  await Group.findByIdAndRemove(id).exec();
+  await Group.findByIdAndDelete(id);
 };
 
 // API Endpoints
@@ -38,8 +38,10 @@ const deleteGroup = async (id) => {
 // Create a new group
 groupRouter.post("/groups", async (req, res) => {
   try {
+
     const { year, groupNumber } = req.body;
     const group = await createGroup(year, groupNumber);
+   
     res.status(201).json({ message: "Group created successfully", group });
   } catch (error) {
     res.status(500).json({ message: "Failed to create group", error });
@@ -93,4 +95,4 @@ groupRouter.delete("/groups/:id", async (req, res) => {
     res.status(500).json({ message: "Failed to delete group", error });
   }
 });
-module.exports =  groupRouter;
+module.exports = groupRouter;

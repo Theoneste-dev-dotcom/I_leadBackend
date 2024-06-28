@@ -1,11 +1,12 @@
 {
   "name": "ilead",
   "version": "1.0.0",
-  "description": "",
+  "description": "before all make ne npm install for installing all packeges run the backend app by \"npm run start\"",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon server.js"
+    "dev": "nodemon server.js",
+    "start": "nodemon server.js"
   },
   "keywords": [],
   "author": "",
@@ -16,6 +17,7 @@
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "jsonwebtoken": "^9.0.2",
+    "lodash": "^4.17.21",
     "mongoose": "^8.4.1",
     "nodemon": "^3.1.3"
   }
